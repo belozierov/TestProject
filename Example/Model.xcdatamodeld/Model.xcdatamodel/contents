@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Article" representedClassName="Article" syncable="YES" codeGenerationType="class">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES">
+            <userInfo>
+                <entry key="jsonPath" value="pub_date"/>
+            </userInfo>
+        </attribute>
+        <attribute name="headline" attributeType="String" syncable="YES">
+            <userInfo>
+                <entry key="jsonPath" value="headline.main"/>
+            </userInfo>
+        </attribute>
+        <attribute name="id" attributeType="String" syncable="YES">
+            <userInfo>
+                <entry key="jsonPath" value="_id"/>
+            </userInfo>
+        </attribute>
+        <attribute name="sectionIndex" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES">
+            <userInfo>
+                <entry key="jsonParser" value="DaysFrom1970"/>
+                <entry key="jsonPath" value="pub_date"/>
+            </userInfo>
+        </attribute>
+        <attribute name="snippet" attributeType="String" syncable="YES"/>
+        <attribute name="source" attributeType="String" syncable="YES"/>
+        <attribute name="url" attributeType="URI" syncable="YES">
+            <userInfo>
+                <entry key="jsonPath" value="web_url"/>
+            </userInfo>
+        </attribute>
+        <relationship name="keywords" toMany="YES" deletionRule="Deny" ordered="YES" destinationEntity="Keyword" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Keyword" representedClassName="Keyword" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="value" attributeType="String" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="name"/>
+                <constraint value="value"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <elements>
+        <element name="Article" positionX="-36" positionY="63" width="128" height="165"/>
+        <element name="Keyword" positionX="-36" positionY="90" width="128" height="75"/>
+    </elements>
+</model>
