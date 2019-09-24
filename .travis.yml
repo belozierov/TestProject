@@ -11,7 +11,7 @@ before_script:
 - "./scripts/update-bundle.sh"
 script:
 #- xcodebuild -scheme Example -sdk iphonesimulator -destination "platform=iOS Simulator,OS=13.0,name=iPhone 11" build test
-- xcodebuild -project Example.xcodeproj -scheme Example -sdk iphoneos -configuration Release
+- xcodebuild -project Example.xcodeproj -scheme Example -sdk iphoneos -configuration Release -allowProvisioningUpdates
   OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO
   HOCKEY_APP_ID=$HOCKEY_APP_ID
 after_script:
