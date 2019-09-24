@@ -10,10 +10,9 @@ before_script:
 - "./scripts/add-key.sh"
 - "./scripts/update-bundle.sh"
 script:
-- xcodebuild -scheme Example -sdk iphonesimulator -destination "platform=iOS Simulator,OS=13.0,name=iPhone
-  11" build test
+#- xcodebuild -scheme Example -sdk iphonesimulator -destination "platform=iOS Simulator,OS=13.0,name=iPhone 11" build test
 - xcodebuild -project Example.xcodeproj -scheme Example -sdk iphoneos -configuration Release
-  OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO TESTFLIGHT_APP_TOKEN=$TESTFLIGHT_APP_TOKEN
+  OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO
   HOCKEY_APP_ID=$HOCKEY_APP_ID
 after_script:
 - "./scripts/remove-key.sh"
@@ -22,7 +21,7 @@ after_success:
 env:
   global:
   - APP_NAME="Example"
-  - DEVELOPER_NAME="Apple Distribution: GLOBAL TECH MAKERS,TOV (447UZ9QZKP)"
+#  - DEVELOPER_NAME="Apple Distribution: GLOBAL TECH MAKERS,TOV (447UZ9QZKP)"
   - PROFILE_NAME="TestProject"
   - BUNDLE_DISPLAY_NAME="Example"
   - secure: iqwu+DZuh72/Ynm2HsRuiZ9nJOLuFZ7xqblBHzrMOsekFl0a0a7gADwo8or5AlQYjMC+GwrpYaQdV0Vg0MHf90wFRH7KWxJsVASJnb1ITd6glfJhOdiFubPxULtcul8vIgYJzVYtU+zSLb75SlZDlNuHtV4D7aCGWQawJ/jqTBH3bYHbu8jQc+cB+i+1DdtL44wE1ngGFFUeahQYYo+Yk2AXKc2qs9HY+iQE/SEm3kLJvULO+CKv/4pqsyLkyemrMn4q57hmNMIyahnlBbRNtUyVMGnajljoG/mRs3F38oGvONA2E87Ctnbzg2DqoCUbD5b7nOdryP2pD7gjYC4NZW62lToTHyBLYgEGuAESyl0EHmR0GYTR5wpTyLwrwlsRiu1/+5q6TNui93xEmBvqIdl3cSxUaRLivWAOcEaSry8Nu2R7FmrGZgfLkSLQ0khw9LUG2R/yr0gm+Hb7uwtL4Qg2WIPbnNzRb24PX4Zn/FFl/V6E988xZRjcqi1ilAFN4OFcGcfrh1xzIC9iAfd4mYV0qbQ1MQUSqURNie2ewEmmnyaHNwyBjcburovH9fJxFhSRmd3sx7Mle/bYfgaI/ogtg9riWaxBoxpehXRerveOAV+sTvlKyTU561lc25Vr3cxF/MiaHkfyay+JTlGdyCnkS5hAl6tOVXM+/Z5YdY0=
