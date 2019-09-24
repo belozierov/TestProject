@@ -1,5 +1,31 @@
-language:
-  - swift
+language: swift
 osx_image: xcode11
+before_script:
+- openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/profile/TestProject.mobileprovision.enc
+  -d -a -out scripts/profile/TestProject.mobileprovision
+- openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dist.cer.enc -d -a
+  -out scripts/certs/dist.cer
+- openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dist.p12.enc -d -a
+  -out scripts/certs/dist.p12
+- "./scripts/add-key.sh"
+- "./scripts/update-bundle.sh"
 script:
-  - xcodebuild -scheme Example -sdk iphonesimulator -destination "platform=iOS Simulator,OS=13.0,name=iPhone 11" build test
+- xcodebuild -scheme Example -sdk iphonesimulator -destination "platform=iOS Simulator,OS=13.0,name=iPhone
+  11" build test
+- xcodebuild -project Example.xcodeproj -scheme Example -sdk iphoneos -configuration Release
+  OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO TESTFLIGHT_APP_TOKEN=$TESTFLIGHT_APP_TOKEN
+  HOCKEY_APP_ID=$HOCKEY_APP_ID
+after_script:
+- "./scripts/remove-key.sh"
+after_success:
+- "./scripts/sign-and-upload.sh"
+env:
+  global:
+  - APP_NAME="Example"
+  - DEVELOPER_NAME="Apple Distribution: GLOBAL TECH MAKERS,TOV (447UZ9QZKP)"
+  - PROFILE_NAME="TestProject"
+  - BUNDLE_DISPLAY_NAME="Example"
+  - secure: iqwu+DZuh72/Ynm2HsRuiZ9nJOLuFZ7xqblBHzrMOsekFl0a0a7gADwo8or5AlQYjMC+GwrpYaQdV0Vg0MHf90wFRH7KWxJsVASJnb1ITd6glfJhOdiFubPxULtcul8vIgYJzVYtU+zSLb75SlZDlNuHtV4D7aCGWQawJ/jqTBH3bYHbu8jQc+cB+i+1DdtL44wE1ngGFFUeahQYYo+Yk2AXKc2qs9HY+iQE/SEm3kLJvULO+CKv/4pqsyLkyemrMn4q57hmNMIyahnlBbRNtUyVMGnajljoG/mRs3F38oGvONA2E87Ctnbzg2DqoCUbD5b7nOdryP2pD7gjYC4NZW62lToTHyBLYgEGuAESyl0EHmR0GYTR5wpTyLwrwlsRiu1/+5q6TNui93xEmBvqIdl3cSxUaRLivWAOcEaSry8Nu2R7FmrGZgfLkSLQ0khw9LUG2R/yr0gm+Hb7uwtL4Qg2WIPbnNzRb24PX4Zn/FFl/V6E988xZRjcqi1ilAFN4OFcGcfrh1xzIC9iAfd4mYV0qbQ1MQUSqURNie2ewEmmnyaHNwyBjcburovH9fJxFhSRmd3sx7Mle/bYfgaI/ogtg9riWaxBoxpehXRerveOAV+sTvlKyTU561lc25Vr3cxF/MiaHkfyay+JTlGdyCnkS5hAl6tOVXM+/Z5YdY0=
+  - secure: 0BTguVvizl33OyXe9umZhGBoTQYd/Toc5pggclkIE5OLSpIL59wQ8+sNAdjfgu3EaAbS9UYxznBdi7apQ7V7PbT9exW+/RBV1Wgw7TY46S9mL0oxtAA9qGOxL6cckrVVcOWfVMj4rLxyTPxt82xsgtHmq9R8C4jGT1mInuZkPYcXxyEdWVmDBq29nGUQjJDj7lDiUIqNStURfZvttVM8RaV/4QbkdwSNRys7NPC0cO0VWt5EdD488tseQy9v4hEUlQTnCmlQRFJJJoFoMMm1dNVuFBZ9NK+KdXLhXXU193XD2W9jRHqZ4Wew9WzMn1DG0o42Le7TbnUexNITA53Q41ay5r+Ksvxauc5RYUNg3gAHwK6tc9dwOpMmpt5OF12aGbDzOfYRPVK+sZD5bgHA442/Xk+tZseojBO9mzD5FAMC0ywY6vXeQ1DkuVoJ9Saic9uMfRnxvFIIToIH/WhUt00IeYBpHf6cBU1EmKB709BfDULj7XLQsn7onrWlsO1PoDSe8JJnx/yPR2epv4OpekE+DtXmz9CCIFDZbLcWGEyVmUYdkeng3lfRIo8nk5YDLNdocBFWtrbVV2uO8g9C7tx9XCGNJ0gmHIRSzE5q+dgjlHND4+jZj5aXV2H73HBraF8eVGoDFANIp5/H5xXuJR6HkIm04QJLB4Uf3rW99RY=
+  - secure: brCZ7YQNufJpmLzcQFQPPPYHUvXsQ93rFpm6ZJeD1kmpBy4jREIcq+shK6HrWyXImQIkUy12cTLs87V7Bii9US914h4Nn5OU/SUdCn7ys4sOBgDYbvNcl5XAtj2CV6IWr+1JJT25vJvDQy19zEPMHDFxc3sr/JL3tNqu4kbnr9QE1cF4Wl7UrIPSFIZckl8RUQttY7YFZ7k4Fvws0HLUVIauaZ9TOeYAPaUcPtVHFR12/0aCG9LJwToZRD7OL2Gjx1+DeRaXQAzx5vabEVGrtWQrwuQDjMJXhwzS73pQ9ihYtpCxilkPg7cw4rxpGRY9kTI+4ddUDirMn7pJ7lRD+Ukfg8x0mVgJisrEgJj9hJK10aXQXqaRzH6kYsSdAw3csMY7T4Udjcxd+FTfSFqPyTdtDqbWyW8z1igfBNVhDCIfZYNx72K0/ElOIK4DfaNvdG1UNhJWHIJyOvobgKX5VCSEbYYyDwgyUu+K5deEYe0er0EXfAjTOqc7DYneCYA0vPDP86dHIIXqET+20Sb05tG64x8+8QKUlqO4KL1Xg4FrR25UeBjFlk6AbiWLgNCSq4veqn91iz2vGAIAiy2/p1iMTo7fwd5LoLzn5NDTTndDOcGCqQ6aQ1EaMQEbOq5FjSkMVL0VTXOz2vfuMQ+lWEO10GB25t0J5p0sAEX4aiU=
+  - secure: JxrRm8/S2o6u79CuvUHfsUfa50ZGkZqu+q/n6i5Kic0Fuyi47rQMxFtxBk6FDmvzK1kNhXGZhPndyw+/66WYmackJ02hqhUSyN7xkvUxX8G/+OcF3/LAYDatF9xHhM5PBKeJ7njCiJjBiTGEwRNOBU7ngsk13YU3Xp9n2Z6zwhGZlhnMqpzRSeMZlUNuyk6RHFJMFzBYoJbzQ2dxVQBKYKMsj9NpJT5ohzENvDqqsUHiyHcRSEx9yR3PZU4AcsifAYDxwus0hUVy7DFmeoXqEtQWE8Vq2uDnWV213kVVtxHfhXZvuz0IdPdebuKQq/t/0JGpHhbCq5OBuG3LwZCBrickSWkmo61ItDiXvo9aYdJDemVlNQa6rjiumQ4IfW2S7Zbo4RYfrzTZag8kYekHYJie5UvX88H16jpTLhdE4kut/3e/MRCWp0EkLdv80CwvRUaTt1jho6escHUce5K5/42BDCIuVixO3tFamM19nmcWpSPzGTZHe2o6lV+LTAwkdyxYZQVhHNczWI/yrh/zOgZeq2mxHoYIeSdowI1DNtEz3VK9d/iR4BSoZgCP5Nl0gLzDbuNtftzFag/gud+iyAszCt2+GsjIUw8TIl5L09MNt/KdOOxfu1uHiTXCuw/VMHpB3qN9aswkWQIM7kXLIZ/tRZx/Hhm9T62DHSWVs7Q=
