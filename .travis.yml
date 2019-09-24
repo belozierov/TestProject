@@ -1,6 +1,5 @@
 language: swift
 osx_image: xcode11
-install: travis_wait 30 mvn install
 before_script:
 - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/profile/TestProject.mobileprovision.enc
   -d -a -out scripts/profile/TestProject.mobileprovision
