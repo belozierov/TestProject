@@ -3,6 +3,8 @@ osx_image: xcode11
 before_script:
 - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/profile/TestProject.mobileprovision.enc
   -d -a -out scripts/profile/TestProject.mobileprovision
+- openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/profile/TestProject.mobileprovision.enc.enc
+  -d -a -out scripts/profile/TestProject.mobileprovision.enc
 - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dist.cer.enc -d -a
   -out scripts/certs/dist.cer
 - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dist.p12.enc -d -a
