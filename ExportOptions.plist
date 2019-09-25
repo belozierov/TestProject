@@ -7,12 +7,19 @@
 	<key>method</key>
 	<string>ad-hoc</string>
 	<key>signingStyle</key>
-	<string>automatic</string>
+	<string>manual</string>
 	<key>stripSwiftSymbols</key>
 	<true/>
 	<key>teamID</key>
 	<string>447UZ9QZKP</string>
 	<key>thinning</key>
 	<string>&lt;none&gt;</string>
+	<key>signingCertificate</key>
+	<string>iPhone Distribution: GLOBAL TECH MAKERS,TOV (447UZ9QZKP)</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>com.coreDataJsonParser.TestProject</key>
+		<string>56e0cc37-7303-4afc-b58f-d983de4fda24</string>
+	</dict>
 </dict>
 </plist>
