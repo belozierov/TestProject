@@ -30,5 +30,5 @@ echo "find indentities keychains: "
 security find-identity -p codesigning  ~/Library/Keychains/ios-build.keychain
 echo " ****** "
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-cp ./scripts/profile/$PROFILE_NAME.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
-cp ./scripts/profile/$PROFILE_NAME_ad_hoc.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+cp ./scripts/profile/TestProject.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+cp ./scripts/profile/TestProject_ad_hoc.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
