@@ -10,18 +10,16 @@ before_script:
 - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dist.p12.enc -d -a
   -out scripts/certs/dist.p12
 - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dev.cer.enc -d -a
-    -out scripts/certs/dev.cer
+  -out scripts/certs/dev.cer
 - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dev.p12.enc -d -a
-    -out scripts/certs/dev.p12
+  -out scripts/certs/dev.p12
 - "./scripts/add-key.sh"
 - "./scripts/update-bundle.sh"
 script:
-- xcodebuild -project Example.xcodeproj -scheme Example -sdk iphoneos -configuration AdHoc archive -archivePath $PWD/Example.xcarchive ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO
-- xcodebuild -exportArchive -archivePath $PWD/Example.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build
-#- xcodebuild -exportArchive -archivePath $PWD/Example.xcarchive -exportPath $PWD/build -exportFormat ipa -exportProvisioningProfile "TestProject_ad_hoc" CODE_SIGN_IDENTITY="iPhone Distribution: GLOBAL TECH MAKERS,TOV (447UZ9QZKP)"
-#- xcodebuild -project Example.xcodeproj -scheme Example -sdk iphoneos -configuration
-#  Release OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO
-#  HOCKEY_APP_ID=$HOCKEY_APP_ID
+- xcodebuild -project Example.xcodeproj -scheme Example -sdk iphoneos -configuration
+  AdHoc archive -archivePath $PWD/Example.xcarchive ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO
+- xcodebuild -exportArchive -archivePath $PWD/Example.xcarchive -exportOptionsPlist
+  ExportOptions.plist -exportPath $PWD/build
 after_script:
 - "./scripts/remove-key.sh"
 after_success:
@@ -35,4 +33,4 @@ env:
   - secure: KuuuRPp7n3BzcM3jyNAbPpK1wspdr3rLqHcpZNoZhrEcURRb//RNu2AKbSYH7dtK/l6jdGYKvG+Bji0vNVGcKVveDhS2ur0z8OgNlWmGwt8ddkx50L6yVTI15sCWpES+C3+fQT7+eVGFgmiJhWe4K+16xGdvZob4BYR6C7o/nTY4iuxl49wYp1lSHJ6l4JxfiwywJ6jQq9NeZF8eQWqVpjX03S9+iY/ZoYdDkqqrXjUB+2Er9ThxErCpko6dbPsMp4JPYrCZmnj7y3Pbr+TNGEneuvK4XHRzRF2YzSEBrS7w09lZcUFzuGgNJZNRORC6ugDJ5u3UnusxX0w09ADwujPh1aPAa4O9ggbQdJklAnxHDJiEAnLUMNc1vUgE5R+HiRrGN4CoGkR5tOm/4GefQ0+GemHHnzl1M+IE0l01ON101CXHKgaVf4qOjKJn0c4zHCfddJmJ8kSeLeLYKqhTRg/6Fg0dlyjzAqCiGpNOTQba9YUsBfO3y+9ly7uyM0GPhSUNrkk2+fiuqyToYmX+SQdiAoIaPYu34hWF81Iut0WXuZnONJVNwo7IFn+50w2UILN6Vji5+SQxHU0V7KlTNzMqjPAx3XKjzWm1wLfL8POtzionTVQjte9fJVYxowabN7UM/W4TgDe0u/RfrI6icsq1/cT/r7mfcGDeDlyh5Xs=
   - secure: lSQ3HxuUM8znV9M0kWABlJ/mcSTIRi5pZrN4pKe8Olwg/kGUW1f5tmhi2W42XOu2PZE1xEWw27IVmgF19ieRmd8WEMWl2EZAoPtm0CJPsWgnbPX/orYdReQp3ZVaagmE/ymWXGG+i1Wzi5cMR9LTdiLi9Uyw28bOjcejELSvBKum572B/t3hITAlYT81ZlnLPIt3hMC/cqDGy6bmJXSvsMMbphfC7MNPVI/dO5c4fQ9Bqj0WZx9Kuusw2VDdja17wSiByiOIuravLd7R+BY1ZAK4UARXsRTkmV/dQOIz2BHYoB7k7H1iNmHGZIAbaOhkCN4dsSklKCYTXCQVfzWsYmwqMBUgpxHiTi0b9CL5sppnwqwX3XJ4YefZpyOX+DgaHpvOCp7EJmH5+1DI6uK27Xcdd4lHnur7GgnNplvC5CKoo/9iSSeXM6y/7uPheDaa/HrtTfx5kB54clbHnn7O7kPHFwwM3RzfmtuXdb6YC/839GTWLzLe2saSNLUbDPeBe562trOtWuNacbQxMjRWJ/Iv/zFCjAveUkin0fQai0hIXvKSj7/uKaCkbRyvwb1nTqC/aPiLcylR5Kt2aIku121m2Klg3Pn5AD82smbmL6hPDR2VTm7N9d0E7F+/MxQvTy7ONsJ8ZXVV+WkP8aJ7Hmkr19uv8vbb0zfG/0wk578=
   - secure: HbJsEbZNTKgZS3p5Z8K6EQvvMsu1ZFON4SqIRoEeDois5c7ZWyVfkK3DvClyCtgiMgP/V6BVwyfIj1863dw/dTz4c6f0NDcflXo1pclDeE8p3O9Uou9CpW0q44rwXUcTlanQtdveyYjkB85OjuvDAgq/YtNzQJHORxKe5XJ+ysdQsyQPIJhVqCovA1LLBEoA5jsAHj3bauBxVpKc6Hp+AMgeTx0NeA8Y0L4HKAkxLVESeE/sUM8jmEXngbcgYGaipWWYgGMz0x9klKFBqM0Lqt4b4FYW9LBzjRBLF8fBy9HNl7udan6plhLm8h8UbLZJuHNaEukRoTC48JWPh9umzrLMZhu4NGTnegwdACywBrPueUnvzk3ICfrJ3536by4+CkkptBw6NS1Vu4DBzIvvPfo5kA+Lhxf6i26kakmptKxcRlczGVLBzpn8UnyRg88Z/qV1a9xAoRMUCKzZO5HnSLKu3rMdLyAkjbNyh24OA9BBXb3YvGnD6Kq0QMLMmqFzdkajXtUNJ/3DF9+budzINpOIOp5/szjABArKXro2KaQn2iSFySdJHXIzAlKIcLt38huj4wma1QOF5JuSagZ3O3BvAwJi0az2SXlCVMjqlVHEMAxx4HOIcOLLb6PyyfwbH7jLNatWpj4htpjgai8vEklcnh++T6aHny9MDy1w0zY=
-  - secure: RG8fQjCKN5dOJ2Drq45ai9ns4+ZmSOfLXdoVay1q6X2o8zL+QAyL78oOY2P+IQ3ckT7Q1/BrqIckr5/DYPR22sFmX1Y5cNnyjqp+cwFyGqJo7Qs/04/gtYB3ePwlK1jQYht7cOwAL9Oc7HZz+N6H/yPKzixsS3/0ikXzrYSxjMkxqKuehoJarWdMpANUJHmLg0FOhoajXC3Mm0UGB8l2OeeKsuE9LV8KVA6+6Iww+LXsGETEuKbyglSWC0cGMSqOCqqzsqpgKoUKIhfKyXueisEywR8AHjtsh2xsVqFHSdQp5sHViy7QVTQ1uq/NrbUY1yPJIwrGeDujRwYG9UUyhpFg5DDoyKU6ZiQP9jcPoWEQeTDrfUYasLRVq7vBos54TrAYjO93J3PDTId91H+aooNGczJlv+FeKGFpWTMlk1+jgbB5cRGjDzM8oEB7LmkLwOblKWH5dk12ul6KSULAyE4XfCX8/tVMNcsYTdmt+cUAYTufMePeC+myhBrtZDcoboTQE3wDg/x8kegtdF7YDhrBhkhQkG6tcUkf/B88fhHj3l6x4W/MxNuA+o8T30XhY33ZjTDJ5rjfZKMIQz5X2EJb/T5fsWnyLclcdvIk3y+njdij+Dnj9Ey1jkT+34XQVazCPoUvHNS50pn7U6ogLAxI45s+QiQ541T5Ha2MO7I=
+  - secure: OqTBLqVB9GZ0C2Duixqi30R9ZOicCO4155gEsqkk9h4/z1Li7GzkJH+So3Bz475hydln6kY8O9kEqvuX07eC+2gg7zoXgwyFtMxDXNAcMnl2YJeHu4UMfPkqm9SwSMJ5ZqoXgouoeHIkwqkZpoYxScPvcwRQ6T1+buhGlGFLITRnC6XSJn9CV56JQNI86L9p+cP9vBPnl1RtVsDi8/JkkWlZ4KosLPgCFPCdYL8E4+ZJTAnZmRPd0riBoF5xQTcmUzcDyL6JXXGqOGs+mrTC/WDl2AZlQgxKyIT3fYKRKd4SICqNiuqDncBB8r/mQTH0hsxvzH3boBlynt8S4TYtquXxgX3j6+0Cxu1dqHnSgzt9SIEEGByZMFchLCwG8NFa+4T4+MAqd4q+gulP/xHNJbNNsfh0SoDYtrM7FUUcnxmanqMWYg6Xm68C3OtPjDJ0ZhW3VAkhetffVN3mdBzLbxoPw+aECFv5J47OwQDjF7Skt7ZLoHgDo0+u0DGtLCrN2psUou5nC28E+U3Z3C82AHu4+xIZTMYcmltsXowH/tMZkWUtEtqzectq51ru8IX2+jfLt/gnTjp1o5jgV5x2HdFR4KeLVZo3gCVB3UyjoHlAB3RHIZXsG44f3/WvgyKluhVu77HUsWheoMmo7jsScOmPvSjlyWyHhMjCFp1EyKY=
