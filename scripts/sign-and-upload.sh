@@ -53,7 +53,7 @@ RELEASE_NOTES="Build: $TRAVIS_BUILD_NUMBER\nUploaded: $RELEASE_DATE"
 #    -H "X-HockeyAppToken: $HOCKEY_APP_TOKEN"
 #fi
 
-if [ ! -z "$HOCKEY_APP_ID" ] && [ ! -z "$HOCKEY_APP_TOKEN" ]; then
+#if [ ! -z "$HOCKEY_APP_ID" ] && [ ! -z "$HOCKEY_APP_TOKEN" ]; then
   echo ""
   echo "***************************"
   echo "* Uploading to Hockeyapp  *"
