@@ -16,6 +16,7 @@ before_script:
 - "./scripts/add-key.sh"
 - "./scripts/update-bundle.sh"
 script:
+- xcodebuild -scheme Example -sdk iphonesimulator -destination "platform=iOS Simulator,OS=13.0,name=iPhone 11" build test
 - xcodebuild -project Example.xcodeproj -scheme Example -sdk iphoneos -configuration
   AdHoc archive -archivePath $PWD/Example.xcarchive ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO
 - xcodebuild -exportArchive -archivePath $PWD/Example.xcarchive -exportOptionsPlist
