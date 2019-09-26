@@ -1,9 +1,4 @@
 #!/bin/sh
-#KEY_CHAIN=ios-build.keychain
-#security create-keychain -p travis $KEY_CHAIN
-#security default-keychain -s $KEY_CHAIN
-#security unlock-keychain -p travis $KEY_CHAIN
-#security set-keychain-settings -t 3600 -u $KEY_CHAIN
 MY_KEYCHAIN=ios-build.keychain
 MY_KEYCHAIN_PASSWORD="secret"
 security create-keychain -p "$MY_KEYCHAIN_PASSWORD" "$MY_KEYCHAIN"
@@ -21,7 +16,6 @@ CERT_IDENTITY=$(security find-identity -v -p codesigning "$MY_KEYCHAIN" | head -
 CERT_UUID=$(security find-identity -v -p codesigning "$MY_KEYCHAIN" | head -1 | grep '"' | awk '{print $2}') # Handy to have UUID (just in case)
 security set-key-partition-list -S apple-tool:,apple: -s -k $MY_KEYCHAIN_PASSWORD -D "$CERT_IDENTITY" -t private $MY_KEYCHAIN # Enable codesigning from a non user interactive shell
 
-
 echo "list keychains: "
 security list-keychains
 echo " ****** "
@@ -29,6 +23,7 @@ echo " ****** "
 echo "find indentities keychains: "
 security find-identity -p codesigning  ~/Library/Keychains/ios-build.keychain
 echo " ****** "
+
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 cp ./scripts/profile/TestProject.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 cp ./scripts/profile/TestProject_ad_hoc.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/

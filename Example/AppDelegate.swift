@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        ValueTransformer.register(name: "DaysFrom1970") { value in
+        TransformerRegistrator.register(withName: "DaysFrom1970") { value in
             let from = Date(timeIntervalSince1970: 0)
             return (value as? String).flatMap(ISO8601DateFormatter().date)
                 .flatMap { Calendar.current.dateComponents([.day], from: from, to: $0).day }

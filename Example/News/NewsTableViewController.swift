@@ -79,7 +79,7 @@ class NewsTableViewController: UITableViewController, NewsViewModelDelegate {
     func recieveError(_ error: Error) {
         let message = error.localizedDescription
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
         present(alert, animated: true)
     }
     
