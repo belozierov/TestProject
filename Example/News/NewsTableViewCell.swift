@@ -15,7 +15,7 @@ class NewsTableViewCell: UITableViewCell {
     @IBOutlet weak var keywordsLabel: UILabel!
     
     func config(with article: Article) {
-        titleLabel.text = article.headline.map { $0 + "Test" }
+        titleLabel.text = article.headline
         descriptionLabel.text = article.snippet
         keywordsLabel.text = article.date?.description
 //        keywordsLabel.text = ((article.keywords?.array as? [Keyword])?
